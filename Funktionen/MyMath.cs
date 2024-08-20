@@ -26,6 +26,13 @@ namespace Funktionen
         { 
             return a * b / Calc_ggT (a, b);   
         }
-            
+        public static int Calc_ggTr(int a, int b)
+        {
+            if (b == 0)
+                return a;
+            else
+
+            return Calc_ggTr(b,a%b);
+        }
     }
 }
