@@ -1,93 +1,118 @@
-﻿using System.ComponentModel.Design;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.Design;
 
 namespace Funktionen
 {
-    internal class Program
+    namespace Funktionen
     {
-        static void Main(string[] args)
+        internal class Program
         {
-            while (true)
+            static void Main(string[] args)
             {
-                ShowMenu();
-                string s = ReadSelection();
-                if (s == "e");
-
-                { 
-                    Console.WriteLine("Programm wird beendet");
-                    break;
-                }
-                int a = ReadInt();
-                int b = ReadInt();
-                switch (s)
+                while (true)
                 {
-                    case "ggT":
-                        int ggT = MyMath.Calc_ggT(a, b);
-                        ShowResult(s, a, b, ggT);
+                    ShowMenu();
+                    string s = ReadSelection();
+                    if (s == "e")
+                    {
+                        Console.WriteLine("Programm wird beendet");
                         break;
+                    }
+                    int a = 0;
+                    int b = 0;
 
-                    case "kgV":
-                        int kgV = MyMath.Calc_ggT(a, b);
-                        ShowResult(s, a, b, kgV);
-                        break;
+                    if (s != "A")
+                    {
+                        a = ReadInt();
+                        b = ReadInt();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Anzahl Werte?");
+                        int anzahlWerte = ReadInt();
+                        int[] values = ReadValues(anzahlWerte);
+                        double average = MyMath.Average(values);
+                        Console.WriteLine($"Der Mittelwert der eingegebenen Parametern beträgt: {average}");
+                        Console.WriteLine($"Die kleinste Zahl ist: {MyMath.Min(values)}");
+                    }
+                    switch (s)
+                    {
+                        case "ggT":
+                            int ggT = MyMath.Calc_ggT(a, b);
+                            ShowResult(s, a, b, ggT);
+                            break;
 
-                    case "ggTr":
-                        int ggTr = MyMath.Calc_ggTr(a, b);
-                        ShowResult(s, a, b, ggTr);
-                        break;
+                        case "kgV":
+                            int kgV = MyMath.Calc_kgV(a, b);
+                            ShowResult(s, a, b, kgV);
+                            break;
+
+                        case "ggT_r":
+                            int ggT_r = MyMath.Calc_ggT_r(a, b);
+                            ShowResult(s, a, b, ggT_r);
+                            break;
+
+                    }
+
                 }
-                
+
             }
             static int ReadInt()
             {
-              
+                int x;
+                do
                 {
-                    int x;
-                    do
-                    {
-                        Console.WriteLine("Gib eine Zahl ein");
+                    Console.WriteLine("Gib eine Zahl ein");
+                    string s = Console.ReadLine();
+                    int.TryParse(s, out x);
+                } while (x <= 0);
 
-                        string s = Console.ReadLine();
-                        int.TryParse(s, out x);
-
-                    } while (x <= 0);
-
-                    Console.WriteLine("Danke");
-                    return x;
-
-                }
+                Console.WriteLine("Danke");
+                return x;
             }
-
             static void ShowResult(string operation, int a, int b, int result)
             {
                 Console.WriteLine(operation + $" von {a} und {b} ist {result}");
+            }
+            static void ShowMenu()
+            {
+                Console.WriteLine("Bitte Operation eingeben:");
+                Console.WriteLine("\t ggT für gemeinsamer Teiler");
+                Console.WriteLine("\t kgV für gemeinsames Vielfach");
+                Console.WriteLine("\t e für Ende");
+                Console.WriteLine("\t ggT_r für rekursiven gemeinsamen Teiler");
+                Console.WriteLine("\t A für Array");
 
             }
-
-        }
-        static void ShowMenu()
-        {
-            Console.WriteLine("Bitte Operation eingeben");
-            Console.WriteLine("\t ggT für gemeinsamer Teiler");
-            Console.WriteLine("\t ggTr für rekursiven gemeinsamen Teiler");
-            Console.WriteLine("\t kgV für gemeinsames Vielfaches");
-            Console.WriteLine("\t e für Ende");
-
-
-        }
-
-        static string ReadSelection()
-        {
-            string s;
-            do
+            static string ReadSelection()
             {
-                s = Console.ReadLine();
-            } while (s != "ggT" && s != "kgV" && s != "e" && s != "ggTr");
+                string s;
+                do
+                {
+                    s = Console.ReadLine();
+                } while (s != "kgV" && s != "ggT" && s != "e" && s != "ggT_r" && s != "A");
 
-            Console.WriteLine("Danke");
-            return s;
+                Console.WriteLine("Danke");
+                return s;
+
+
+            }
+            static int[] ReadValues(int length)
+            {
+                int i = 0;
+                int[] values = new int[length];
+                while (i < length)
+                {
+                    values[i++] = ReadInt();
+                }
+                return values;
+            }
+
+
+
+
+
 
         }
     }
-
-}   
-
+}
